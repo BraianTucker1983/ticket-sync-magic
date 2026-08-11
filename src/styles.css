@@ -20,6 +20,8 @@
 
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
+  --font-display: "Bebas Neue", system-ui, sans-serif;
+  --font-sans: "Manrope", system-ui, sans-serif;
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
@@ -62,26 +64,29 @@
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.129 0.042 264.695);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.129 0.042 264.695);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.129 0.042 264.695);
-  --primary: oklch(0.208 0.042 265.755);
-  --primary-foreground: oklch(0.984 0.003 247.858);
-  --secondary: oklch(0.968 0.007 247.896);
-  --secondary-foreground: oklch(0.208 0.042 265.755);
-  --muted: oklch(0.968 0.007 247.896);
-  --muted-foreground: oklch(0.554 0.046 257.417);
-  --accent: oklch(0.968 0.007 247.896);
-  --accent-foreground: oklch(0.208 0.042 265.755);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(0.929 0.013 255.508);
-  --input: oklch(0.929 0.013 255.508);
-  --ring: oklch(0.704 0.04 256.788);
+  --radius: 1rem;
+  --background: oklch(0.16 0.045 300);
+  --foreground: oklch(0.98 0.01 90);
+  --card: oklch(0.22 0.06 300);
+  --card-foreground: oklch(0.98 0.01 90);
+  --popover: oklch(0.22 0.06 300);
+  --popover-foreground: oklch(0.98 0.01 90);
+  --primary: oklch(0.68 0.25 12);
+  --primary-foreground: oklch(0.99 0.01 90);
+  --secondary: oklch(0.78 0.19 65);
+  --secondary-foreground: oklch(0.2 0.05 300);
+  --muted: oklch(0.26 0.05 300);
+  --muted-foreground: oklch(0.76 0.03 300);
+  --accent: oklch(0.8 0.16 195);
+  --accent-foreground: oklch(0.18 0.05 300);
+  --destructive: oklch(0.6 0.24 25);
+  --destructive-foreground: oklch(0.99 0.01 90);
+  --border: oklch(0.35 0.07 300);
+  --input: oklch(0.3 0.06 300);
+  --ring: oklch(0.68 0.25 12);
+  --gradient-fiesta: linear-gradient(115deg, oklch(0.68 0.25 12), oklch(0.78 0.19 65) 45%, oklch(0.8 0.16 195));
+  --gradient-noche: linear-gradient(180deg, oklch(0.16 0.045 300 / 0.2), oklch(0.16 0.045 300 / 0.96));
+  --shadow-glow: 0 24px 70px -24px oklch(0.68 0.25 12 / 0.7);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -140,5 +145,27 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: var(--font-sans);
   }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    letter-spacing: 0.01em;
+  }
+}
+
+@utility text-fiesta {
+  background-image: var(--gradient-fiesta);
+  background-clip: text;
+  color: transparent;
+}
+
+@utility bg-fiesta {
+  background-image: var(--gradient-fiesta);
+}
+
+@utility shadow-fiesta {
+  box-shadow: var(--shadow-glow);
 }
