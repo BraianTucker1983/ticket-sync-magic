@@ -25,10 +25,14 @@ export function FormularioInscripcion() {
   const [error, setError] = useState<string | null>(null);
   const [enviando, setEnviando] = useState(false);
 
+  // Estado para controlar el paso actual (1: Registro y Pago, 2: WhatsApp)
+  const [paso, setPaso] = useState<1 | 2>(1);
+
   const entrada = evento.entradas.find((e) => e.id === tipo) ?? evento.entradas[0];
   const total = entrada.precio * cantidad;
 
-  const onSubmit = async (e: React.FormEvent) => {
+  // Paso 1: Valida, guarda en Supabase, copia el Alias y abre Mercado Pago
+  const onSubmitPaso1 = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
 
@@ -55,31 +59,48 @@ export function FormularioInscripcion() {
       return;
     }
 
+    // Copiar el alias al portapapeles del usuario
+    try {
+      await navigator.clipboard.writeText(evento.pago.alias);
+    } catch {
+      // Si el navegador bloquea el portapapeles, continúa de todas formas
+    }
+
+    // Abrir la web/app de Mercado Pago
+    window.open("https://www.mercadopago.com.ar/", "_blank", "noopener,noreferrer");
+
+    // Avanzar al paso 2
+    setPaso(2);
+  };
+
+  // Paso 2: Abrir WhatsApp con la plantilla de mensaje cargada
+  const handleEnviarWhatsApp = () => {
     const mensaje =
       `Hola! Me inscribí al evento ${evento.nombre}.\n` +
-      `Nombre: ${parsed.data.nombre}\n` +
-      `Entrada: ${entrada.nombre} x${parsed.data.cantidad}\n` +
+      `Nombre: ${nombre}\n` +
+      `Entrada: ${entrada.nombre} x${cantidad}\n` +
       `Total: ${formatearPrecio(total)}\n` +
       `Transferí al alias ${evento.pago.alias} y te adjunto el comprobante.`;
 
     window.open(
       `https://wa.me/${evento.whatsapp}?text=${encodeURIComponent(mensaje)}`,
       "_blank",
-      "noopener,noreferrer",
+      "noopener,noreferrer"
     );
   };
 
   const inputClass =
-    "w-full rounded-xl border border-border bg-input/60 px-4 py-3 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:border-primary";
+    "w-full rounded-xl border border-border bg-input/60 px-4 py-3 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:border-primary disabled:opacity-50";
 
   return (
-    <form onSubmit={onSubmit} className="grid gap-4">
+    <form onSubmit={onSubmitPaso1} className="grid gap-4">
       <div className="grid gap-4 sm:grid-cols-2">
         <label className="grid gap-2 text-sm text-muted-foreground">
           Nombre y apellido
           <input
             className={inputClass}
             value={nombre}
+            disabled={paso === 2}
             maxLength={100}
             onChange={(e) => setNombre(e.target.value)}
             placeholder="Juana Pérez"
@@ -91,6 +112,7 @@ export function FormularioInscripcion() {
             className={inputClass}
             type="email"
             value={email}
+            disabled={paso === 2}
             maxLength={255}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="juana@mail.com"
@@ -101,6 +123,7 @@ export function FormularioInscripcion() {
           <input
             className={inputClass}
             value={telefono}
+            disabled={paso === 2}
             maxLength={30}
             onChange={(e) => setTelefono(e.target.value)}
             placeholder="+54 9 11 0000 0000"
@@ -113,6 +136,7 @@ export function FormularioInscripcion() {
             type="number"
             min={1}
             max={20}
+            disabled={paso === 2}
             value={cantidad}
             onChange={(e) => setCantidad(Math.max(1, Math.min(20, Number(e.target.value) || 1)))}
           />
@@ -126,12 +150,13 @@ export function FormularioInscripcion() {
             <button
               type="button"
               key={e.id}
+              disabled={paso === 2}
               onClick={() => setTipo(e.id)}
               className={`rounded-xl border px-4 py-3 text-left text-sm transition-colors ${
                 tipo === e.id
                   ? "border-primary bg-primary/15 text-foreground"
                   : "border-border bg-card/60 text-muted-foreground hover:border-accent"
-              }`}
+              } disabled:opacity-50`}
             >
               <span className="block font-semibold">{e.nombre}</span>
               <span className="text-xs">{formatearPrecio(e.precio)}</span>
@@ -151,17 +176,48 @@ export function FormularioInscripcion() {
         </p>
       )}
 
-      <button
-        type="submit"
-        disabled={enviando}
-        className="bg-fiesta shadow-fiesta rounded-xl px-6 py-4 font-display text-2xl tracking-wide text-primary-foreground transition-transform hover:scale-[1.01] disabled:opacity-60"
-      >
-        {enviando ? "Registrando…" : "Reservar y enviar comprobante"}
-      </button>
-      <p className="text-xs text-muted-foreground">
-        Al reservar se abre WhatsApp con un mensaje listo para que adjuntes el comprobante de la
-        transferencia al alias <strong className="text-foreground">{evento.pago.alias}</strong>.
-      </p>
+      {/* VISTA DEL PASO 1 */}
+      {paso === 1 && (
+        <>
+          <button
+            type="submit"
+            disabled={enviando}
+            className="bg-fiesta shadow-fiesta rounded-xl px-6 py-4 font-display text-2xl tracking-wide text-primary-foreground transition-transform hover:scale-[1.01] disabled:opacity-60"
+          >
+            {enviando ? "Registrando…" : "1. Registrar e ir a pagar en Mercado Pago"}
+          </button>
+          <p className="text-xs text-muted-foreground">
+            Al hacer clic se registrará tu reserva, se copiará el alias{" "}
+            <strong className="text-foreground">{evento.pago.alias}</strong> al portapapeles y se abrirá Mercado Pago para realizar la transferencia.
+          </p>
+        </>
+      )}
+
+      {/* VISTA DEL PASO 2 */}
+      {paso === 2 && (
+        <div className="grid gap-3 rounded-xl border border-primary/30 bg-primary/10 p-4">
+          <p className="text-sm text-foreground">
+            <strong>¡Inscripción registrada!</strong> Copiamos el alias{" "}
+            <u className="font-mono font-bold">{evento.pago.alias}</u> al portapapeles y abrimos Mercado Pago.
+          </p>
+
+          <button
+            type="button"
+            onClick={handleEnviarWhatsApp}
+            className="w-full rounded-xl bg-emerald-600 px-6 py-4 font-display text-2xl tracking-wide text-white transition-transform hover:bg-emerald-700 hover:scale-[1.01]"
+          >
+            2. Enviar comprobante por WhatsApp
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setPaso(1)}
+            className="text-xs text-muted-foreground underline hover:text-foreground text-center"
+          >
+            Modificar datos de la reserva
+          </button>
+        </div>
+      )}
     </form>
   );
 }

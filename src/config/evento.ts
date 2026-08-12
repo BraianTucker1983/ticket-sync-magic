@@ -5,47 +5,47 @@
 // ─────────────────────────────────────────────────────────────
 
 export const evento = {
-  nombre: "Nombre del Evento",
+  nombre: "Tucker Fest",
   bajada: "Una noche de música, color y gente linda",
   descripcion:
     "Un evento pensado para vivirlo de principio a fin: música en vivo, DJs, food trucks y una producción visual que no vas a olvidar. Reservá tu lugar antes de que se agote.",
-  fecha: "Sábado 12 de septiembre",
+  fecha: "Domingo 16 de agosto",
   horario: "22:00 a 06:00 hs",
-  lugar: "Nombre del Salón",
-  direccion: "Av. Siempreviva 742, Buenos Aires",
+  lugar: "Club estudiantes Ferroviario Mitre",
+  direccion: "Logia Lautaro y Coliqueo - Coronel Suarez",
 
   // Pago por transferencia con Mercado Pago
   pago: {
-    alias: "MI.ALIAS.MP",
-    cbu: "0000003100010000000001",
-    titular: "Nombre y Apellido",
+    alias: "BRAIANTUCKER.MP",
+    cbu: "0000003100057583444356",
+    titular: "Braian Tucker",
   },
 
   // WhatsApp al que se envía el comprobante (formato internacional, sin + ni espacios)
-  whatsapp: "5491100000000",
+  whatsapp: "5492926466613",
 
   entradas: [
     {
       id: "general",
       nombre: "General",
-      precio: 15000,
-      detalle: ["Acceso general", "Barra habilitada", "Cupos limitados"],
+      precio: 5000,
+      detalle: ["Acceso general", "Barra habilitada"],
       destacada: false,
     },
-    {
-      id: "vip",
-      nombre: "VIP",
-      precio: 25000,
-      detalle: ["Ingreso preferencial", "Sector exclusivo", "Welcome drink"],
-      destacada: true,
-    },
-    {
-      id: "mesa",
-      nombre: "Mesa (4 personas)",
-      precio: 90000,
-      detalle: ["Mesa reservada", "Botella incluida", "Atención personalizada"],
-      destacada: false,
-    },
+    // {
+    //   id: "vip",
+    //   nombre: "VIP",
+    //   precio: 25000,
+    //   detalle: ["Ingreso preferencial", "Sector exclusivo", "Welcome drink"],
+    //   destacada: true,
+    // },
+    // {
+    //   id: "mesa",
+    //   nombre: "Mesa (4 personas)",
+    //   precio: 90000,
+    //   detalle: ["Mesa reservada", "Botella incluida", "Atención personalizada"],
+    //   destacada: false,
+    // },
   ],
 } as const;
 
