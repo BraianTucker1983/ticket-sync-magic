@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import heroImg from "@/assets/hero-evento.jpg";
+import heroImg from "@/assets/Flyier Ferroviario.jpeg";
 import { evento, formatearPrecio } from "@/config/evento";
 import { FormularioInscripcion } from "@/components/FormularioInscripcion";
 
@@ -26,35 +26,37 @@ export const Route = createFileRoute("/")({
 function Index() {
   return (
     <main className="min-h-screen bg-background">
-      <section className="relative isolate overflow-hidden">
-        <img
-          src={heroImg}
-          alt={`Público disfrutando de ${evento.nombre}`}
-          width={1600}
-          height={1104}
-          className="absolute inset-0 h-full w-full object-cover"
-        />
-        <div
-          className="absolute inset-0"
-          style={{ backgroundImage: "var(--gradient-noche)" }}
-          aria-hidden="true"
-        />
-        <div className="relative mx-auto flex min-h-[92vh] max-w-5xl flex-col justify-end gap-6 px-6 pb-20 pt-32">
-          <p className="text-sm font-semibold uppercase tracking-[0.35em] text-accent">
-            {evento.fecha} · {evento.lugar}
-          </p>
-          <h1 className="text-6xl leading-[0.9] sm:text-8xl">
-            <span className="text-fiesta">{evento.nombre}</span>
-          </h1>
-          <p className="max-w-xl text-lg text-muted-foreground">{evento.bajada}</p>
-          <a
-            href="#entradas"
-            className="bg-fiesta shadow-fiesta w-fit rounded-full px-8 py-4 font-display text-2xl tracking-wide text-primary-foreground"
-          >
-            Quiero mi entrada
-          </a>
-        </div>
-      </section>
+      <section className="relative isolate overflow-hidden bg-card/30 py-12 md:py-16 border-b border-border">
+  <div className="mx-auto max-w-5xl px-6 grid gap-8 md:grid-cols-[1.1fr_0.9fr] items-center">
+    
+    {/* Columna Izquierda: Información del Evento */}
+    <div className="flex flex-col gap-5">
+      <p className="text-sm font-semibold uppercase tracking-[0.35em] text-accent">
+        {evento.fecha} · {evento.lugar}
+      </p>
+      <h1 className="text-5xl sm:text-7xl leading-[0.9]">
+        <span className="text-fiesta">{evento.nombre}</span>
+      </h1>
+      <p className="text-lg text-muted-foreground">{evento.bajada}</p>
+      <a
+        href="#entradas"
+        className="bg-fiesta shadow-fiesta w-fit rounded-full px-8 py-4 font-display text-2xl tracking-wide text-primary-foreground mt-2"
+      >
+        Quiero mi entrada
+      </a>
+    </div>
+
+    {/* Columna Derecha: Flyer Completo sin recortes */}
+    <div className="relative mx-auto w-full max-w-sm overflow-hidden rounded-2xl border border-border shadow-2xl">
+      <img
+        src={heroImg}
+        alt={`Flyer de ${evento.nombre}`}
+        className="w-full h-auto object-contain block"
+      />
+    </div>
+
+  </div>
+</section>
 
       <section className="mx-auto grid max-w-5xl gap-10 px-6 py-20 md:grid-cols-[1.2fr_1fr]">
         <div className="grid gap-4">

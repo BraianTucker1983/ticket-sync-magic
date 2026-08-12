@@ -8,7 +8,10 @@ import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
 export default defineConfig({
   vite: {
-    base: "/ticket-sync-magic/", // <--- Reemplaza con el nombre exacto de tu repositorio en GitHub
+    base: "/ticket-sync-magic/", // <--- Tu repositorio en GitHub
+  },
+  nitro: {
+    preset: "static", // <--- Indica a Nitro que genere HTML/CSS/JS estático
   },
   tanstackStart: {
     // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
