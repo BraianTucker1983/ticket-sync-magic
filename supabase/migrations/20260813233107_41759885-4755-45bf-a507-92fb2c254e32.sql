@@ -1,0 +1,1 @@
+ALTER TABLE public.inscripciones ADD COLUMN metodo_pago text;
