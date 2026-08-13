@@ -21,6 +21,7 @@ export type Database = {
           email: string
           estado: string
           id: string
+          metodo_pago: string | null
           monto_total: number
           nombre: string
           notas: string | null
@@ -33,6 +34,7 @@ export type Database = {
           email: string
           estado?: string
           id?: string
+          metodo_pago?: string | null
           monto_total?: number
           nombre: string
           notas?: string | null
@@ -45,6 +47,7 @@ export type Database = {
           email?: string
           estado?: string
           id?: string
+          metodo_pago?: string | null
           monto_total?: number
           nombre?: string
           notas?: string | null
