@@ -7,12 +7,19 @@
 export const evento = {
   nombre: "Tucker Fest",
   bajada: "Una noche de música, color y gente linda",
-  descripcion:
-    "Un evento pensado para vivirlo de principio a fin: música en vivo, DJs, food trucks y una producción visual que no vas a olvidar. Reservá tu lugar antes de que se agote.",
+  descripcion: `Un festival independiente hecho por y para amantes de la música.
+
+Nueve bandas en vivo: Una grilla variada con géneros para todos los gustos, desde proyectos amigos consagrados hasta bandas que hacen su debut.
+
+Servicio de Cantina: Cerveza y bebidas durante toda la jornada.
+
+El ambiente: Encuentro, buena vibra y el mejor plan para bancar la música independiente.
+
+¡Conseguí tu entrada y vení a vivir la experiencia!`,
   fecha: "Domingo 16 de agosto",
   horario: "22:00 a 06:00 hs",
-  lugar: "Club estudiantes Ferroviario Mitre",
-  direccion: "Logia Lautaro y Coliqueo - Coronel Suarez",
+  lugar: "Club Estudiantes Ferroviario Mitre",
+  direccion: "Logia Lautaro y Coliqueo - Coronel Suárez",
 
   // Pago por transferencia con Mercado Pago
   pago: {
@@ -30,22 +37,8 @@ export const evento = {
       nombre: "General",
       precio: 5000,
       detalle: ["Acceso general", "Barra habilitada"],
-      destacada: false,
-    },
-    // {
-    //   id: "vip",
-    //   nombre: "VIP",
-    //   precio: 25000,
-    //   detalle: ["Ingreso preferencial", "Sector exclusivo", "Welcome drink"],
-    //   destacada: true,
-    // },
-    // {
-    //   id: "mesa",
-    //   nombre: "Mesa (4 personas)",
-    //   precio: 90000,
-    //   detalle: ["Mesa reservada", "Botella incluida", "Atención personalizada"],
-    //   destacada: false,
-    // },
+      destacada: true, // La dejamos destacada para que tome la estética principal en la tarjeta
+    },    
   ],
 } as const;
 
